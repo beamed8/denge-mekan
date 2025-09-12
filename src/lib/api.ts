@@ -5,7 +5,7 @@ const API_BASE = `${API_URL}/api`;
 // Emlakları getir
 export async function getEmlaklar() {
   const res = await fetch(
-    `${API_URL}/api/emlaks?populate[kategori]=true&populate[resimler]=true`
+    `${API_URL}/api/emlaks?populate=kategoris&populate=resimler`
   );
 
   if (!res.ok) {
