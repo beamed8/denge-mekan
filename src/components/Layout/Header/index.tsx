@@ -218,7 +218,7 @@ const Header: React.FC = () => {
               href="#"
               className="text-base sm:text-xm font-medium text-inherit hover:text-primary"
             >
-              destek@dengemenajerlik.com
+              dengemekanmenajerlik@gmail.com
             </Link>
             <Link
               href="#"

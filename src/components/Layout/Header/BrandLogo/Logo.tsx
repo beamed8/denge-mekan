@@ -10,7 +10,7 @@ const Logo: React.FC<LogoProps> = ({ sticky }) => {
   return (
     <>
       <Image
-        src={"images/header/dark-logo.png"}
+        src={"/images/header/dark-logo.png"}
         alt="logo"
         width={logoWidth}
         height={logoHeight}
@@ -18,7 +18,7 @@ const Logo: React.FC<LogoProps> = ({ sticky }) => {
         className={`dark:hidden transition-all duration-300`}
       />
       <Image
-        src={"images/header/logo.png"}
+        src={"/images/header/logo.png"}
         alt="logo"
         width={logoWidth}
         height={logoHeight}

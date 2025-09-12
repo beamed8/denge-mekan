@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import PropertyCard from "@/components/Home/Properties/Card/Card";
+import Breadcrumb from "@/components/Breadcrumb";
 import { getEmlaklar, getKategoriler } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -14,6 +15,11 @@ const kategoriAliases: Record<string, string[]> = {
 };
 
 const PropertiesListing: React.FC = () => {
+  // Breadcrumb linkleri
+  const breadcrumbLinks = [
+    { href: '/', text: 'Anasayfa' },
+    { href: '/properties', text: 'Mekanlar' },
+  ];
   const [emlaklar, setEmlaklar] = useState<any[]>([]);
   const [kategoriler, setKategoriler] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

@@ -4,6 +4,7 @@
 import { useState, Fragment } from "react";
 import Link from "next/link";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 
 interface PropertyDetailsProps {
   data: any;
@@ -11,7 +12,12 @@ interface PropertyDetailsProps {
 
 const PropertyDetails = ({ data }: PropertyDetailsProps) => {
   const attributes = data?.attributes || {};
-  const { baslik, aciklama, resimler, fiyat, lokasyon } = attributes;
+  const { baslik, aciklama, resimler, fiyat, lokasyon, slug } = attributes;
+  const breadcrumbLinks = [
+    { href: '/', text: 'Anasayfa' },
+    { href: '/properties', text: 'Mekanlar' },
+    { href: `/properties/${slug || ''}`, text: baslik || 'Detay' },
+  ];
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -100,6 +106,10 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
 
   return (
     <>
+      {/* Breadcrumb */}
+      <div className="pt-6 pb-2">
+        <Breadcrumb links={breadcrumbLinks} />
+      </div>
       <div className="container py-12">
         <h1 className="text-3xl font-bold mb-4">{renderSafeField(baslik)}</h1>
 

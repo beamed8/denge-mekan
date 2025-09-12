@@ -12,6 +12,8 @@ import Head from "next/head";
 
 import { useEffect, useState } from "react";
 
+import Breadcrumb from "@/components/Breadcrumb";
+
 export default function Details() {
   const { slug } = useParams();
   const [item, setItem] = useState<any>(null);
@@ -268,6 +270,20 @@ export default function Details() {
       <div className="container mx-auto max-w-8xl px-5 2xl:px-0">
         <div className="grid grid-cols-12 items-end gap-6">
           <div className="lg:col-span-8 col-span-12">
+            <div className="mb-2">
+              <div className="flex justify-start items-center text-[10px] text-[#7DA0C3] font-medium">
+                <Breadcrumb
+                  links={[
+                    { href: "/", text: "Anasayfa" },
+                    { href: "/properties", text: "Mekanlar" },
+                    {
+                      href: `/properties/${item.slug || ""}`,
+                      text: item.name || "Detay",
+                    },
+                  ]}
+                />
+              </div>
+            </div>
             <h1 className="lg:text-52 text-40 font-semibold text-dark dark:text-white">
               {item?.name}
             </h1>
@@ -292,7 +308,7 @@ export default function Details() {
             {item?.images &&
               item.images[0] &&
               (item.images[0].mime?.startsWith("video") ? (
-                <div className="rounded-2xl w-full h-full object-cover bg-black">
+                <div className="rounded-2xl w-full h-[632px] object-cover bg-black relative">
                   <video
                     src={item.images[0].src}
                     controls
@@ -300,7 +316,8 @@ export default function Details() {
                       borderRadius: "1rem",
                       background: "#000",
                       width: "100%",
-                      height: "540px",
+                      height: "100%",
+                      objectFit: "cover",
                     }}
                   >
                     <source
@@ -315,19 +332,20 @@ export default function Details() {
                   </video>
                 </div>
               ) : (
-                <Image
-                  src={item.images[0].src}
-                  alt={item.images[0].alt || item.name}
-                  width={900}
-                  height={540}
-                  className="rounded-2xl w-full h-full object-cover"
-                  unoptimized
-                />
+                <div className="rounded-2xl w-full h-[632px] relative">
+                  <Image
+                    src={item.images[0].src}
+                    alt={item.images[0].alt || item.name}
+                    fill
+                    className="object-cover rounded-2xl"
+                    unoptimized
+                  />
+                </div>
               ))}
           </div>
           <div className="lg:col-span-4 lg:block hidden">
             {item?.images && item?.images[1] && (
-              <div className="cursor-pointer" onClick={() => openLightbox(1)}>
+              <div className="cursor-pointer relative h-[300px]" onClick={() => openLightbox(1)}>
                 {item.images[1].mime?.startsWith("video") ? (
                   <div className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity bg-black">
                     <video
@@ -337,7 +355,8 @@ export default function Details() {
                         borderRadius: "1rem",
                         background: "#000",
                         width: "100%",
-                        height: "300px",
+                        height: "100%",
+                        objectFit: "cover",
                       }}
                     >
                       <source
@@ -355,9 +374,8 @@ export default function Details() {
                   <Image
                     src={item.images[1].src}
                     alt={item.images[1].alt || item.name}
-                    width={400}
-                    height={300}
-                    className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    fill
+                    className="object-cover rounded-2xl hover:opacity-90 transition-opacity"
                     unoptimized
                   />
                 )}
@@ -366,7 +384,7 @@ export default function Details() {
           </div>
           <div className="lg:col-span-2 col-span-6">
             {item?.images && item?.images[2] && (
-              <div className="cursor-pointer" onClick={() => openLightbox(2)}>
+              <div className="cursor-pointer relative h-[300px]" onClick={() => openLightbox(2)}>
                 {item.images[2].mime?.startsWith("video") ? (
                   <div className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity bg-black">
                     <video
@@ -376,7 +394,8 @@ export default function Details() {
                         borderRadius: "1rem",
                         background: "#000",
                         width: "100%",
-                        height: "300px",
+                        height: "100%",
+                        objectFit: "cover",
                       }}
                     >
                       <source
@@ -394,9 +413,8 @@ export default function Details() {
                   <Image
                     src={item.images[2].src}
                     alt={item.images[2].alt || item.name}
-                    width={400}
-                    height={300}
-                    className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    fill
+                    className="object-cover rounded-2xl hover:opacity-90 transition-opacity"
                     unoptimized
                   />
                 )}
@@ -406,7 +424,7 @@ export default function Details() {
           <div className="lg:col-span-2 col-span-6">
             {item?.images && item?.images[3] && (
               <div
-                className="cursor-pointer relative"
+                className="cursor-pointer relative h-[300px]"
                 onClick={() => openLightbox(3)}
               >
                 {item.images[3].mime?.startsWith("video") ? (
@@ -418,7 +436,8 @@ export default function Details() {
                         borderRadius: "1rem",
                         background: "#000",
                         width: "100%",
-                        height: "300px",
+                        height: "100%",
+                        objectFit: "cover",
                       }}
                     >
                       <source
@@ -436,9 +455,8 @@ export default function Details() {
                   <Image
                     src={item.images[3].src}
                     alt={item.images[3].alt || item.name}
-                    width={400}
-                    height={300}
-                    className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    fill
+                    className="object-cover rounded-2xl hover:opacity-90 transition-opacity"
                     unoptimized
                   />
                 )}
