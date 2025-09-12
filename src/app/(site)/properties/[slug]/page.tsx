@@ -167,16 +167,20 @@ export default function Details() {
             aciklama: data.aciklama,
             images: resimlerArr.map((media: any) => {
               // Güvenli URL ve MIME tipi oluşturma
-              let url = media.url || (media.formats && media.formats.medium?.url) || "";
+              let url =
+                media.url || (media.formats && media.formats.medium?.url) || "";
               if (url && !url.startsWith("http")) {
-                url = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"}${url}`;
+                url = `${
+                  process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337"
+                }${url}`;
               }
               // MIME tipi fallback
               let mime = media.mime || media.mimeType || "";
               if (!mime && url) {
                 if (url.endsWith(".mp4")) mime = "video/mp4";
                 else if (url.endsWith(".mov")) mime = "video/quicktime";
-                else if (url.match(/\.(jpg|jpeg|png|webp)$/)) mime = "image/jpeg";
+                else if (url.match(/\.(jpg|jpeg|png|webp)$/))
+                  mime = "image/jpeg";
               }
               // Alt text fallback
               const alt = media.alternativeText || media.name || "";
@@ -285,15 +289,28 @@ export default function Details() {
         <div className="grid grid-cols-12 mt-8 gap-8">
           <div className="lg:col-span-8 col-span-12 row-span-2">
             {/* Dinamik: İlk video varsa en önde video, yoksa resim göster */}
-            {item?.images && item.images[0] && (
-              item.images[0].mime?.startsWith("video") ? (
+            {item?.images &&
+              item.images[0] &&
+              (item.images[0].mime?.startsWith("video") ? (
                 <div className="rounded-2xl w-full h-full object-cover bg-black">
                   <video
                     src={item.images[0].src}
                     controls
-                    style={{ borderRadius: "1rem", background: "#000", width: "100%", height: "540px" }}
+                    style={{
+                      borderRadius: "1rem",
+                      background: "#000",
+                      width: "100%",
+                      height: "540px",
+                    }}
                   >
-                    <source src={item.images[0].src} type={item.images[0].src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                    <source
+                      src={item.images[0].src}
+                      type={
+                        item.images[0].src.endsWith(".mov")
+                          ? "video/quicktime"
+                          : "video/mp4"
+                      }
+                    />
                     Tarayıcınız bu videoyu desteklemiyor.
                   </video>
                 </div>
@@ -306,8 +323,7 @@ export default function Details() {
                   className="rounded-2xl w-full h-full object-cover"
                   unoptimized
                 />
-              )
-            )}
+              ))}
           </div>
           <div className="lg:col-span-4 lg:block hidden">
             {item?.images && item?.images[1] && (
@@ -317,9 +333,21 @@ export default function Details() {
                     <video
                       src={item.images[1].src}
                       controls
-                      style={{ borderRadius: "1rem", background: "#000", width: "100%", height: "300px" }}
+                      style={{
+                        borderRadius: "1rem",
+                        background: "#000",
+                        width: "100%",
+                        height: "300px",
+                      }}
                     >
-                      <source src={item.images[1].src} type={item.images[1].src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                      <source
+                        src={item.images[1].src}
+                        type={
+                          item.images[1].src.endsWith(".mov")
+                            ? "video/quicktime"
+                            : "video/mp4"
+                        }
+                      />
                       Tarayıcınız bu videoyu desteklemiyor.
                     </video>
                   </div>
@@ -344,9 +372,21 @@ export default function Details() {
                     <video
                       src={item.images[2].src}
                       controls
-                      style={{ borderRadius: "1rem", background: "#000", width: "100%", height: "300px" }}
+                      style={{
+                        borderRadius: "1rem",
+                        background: "#000",
+                        width: "100%",
+                        height: "300px",
+                      }}
                     >
-                      <source src={item.images[2].src} type={item.images[2].src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                      <source
+                        src={item.images[2].src}
+                        type={
+                          item.images[2].src.endsWith(".mov")
+                            ? "video/quicktime"
+                            : "video/mp4"
+                        }
+                      />
                       Tarayıcınız bu videoyu desteklemiyor.
                     </video>
                   </div>
@@ -374,9 +414,21 @@ export default function Details() {
                     <video
                       src={item.images[3].src}
                       controls
-                      style={{ borderRadius: "1rem", background: "#000", width: "100%", height: "300px" }}
+                      style={{
+                        borderRadius: "1rem",
+                        background: "#000",
+                        width: "100%",
+                        height: "300px",
+                      }}
                     >
-                      <source src={item.images[3].src} type={item.images[3].src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                      <source
+                        src={item.images[3].src}
+                        type={
+                          item.images[3].src.endsWith(".mov")
+                            ? "video/quicktime"
+                            : "video/mp4"
+                        }
+                      />
                       Tarayıcınız bu videoyu desteklemiyor.
                     </video>
                   </div>
@@ -412,9 +464,13 @@ export default function Details() {
                       if (node.type === "paragraph") {
                         return (
                           <p key={index} className="mb-4">
-                            {node.children?.map((child: any, childIndex: number) => (
-                              <Fragment key={childIndex}>{child.text}</Fragment>
-                            ))}
+                            {node.children?.map(
+                              (child: any, childIndex: number) => (
+                                <Fragment key={childIndex}>
+                                  {child.text}
+                                </Fragment>
+                              )
+                            )}
                           </p>
                         );
                       }
@@ -422,17 +478,25 @@ export default function Details() {
                         if (node.level === 1) {
                           return (
                             <h1 key={index} className="text-2xl font-bold mb-4">
-                              {node.children?.map((child: any, childIndex: number) => (
-                                <Fragment key={childIndex}>{child.text}</Fragment>
-                              ))}
+                              {node.children?.map(
+                                (child: any, childIndex: number) => (
+                                  <Fragment key={childIndex}>
+                                    {child.text}
+                                  </Fragment>
+                                )
+                              )}
                             </h1>
                           );
                         }
                         return (
                           <h2 key={index} className="text-xl font-bold mb-3">
-                            {node.children?.map((child: any, childIndex: number) => (
-                              <Fragment key={childIndex}>{child.text}</Fragment>
-                            ))}
+                            {node.children?.map(
+                              (child: any, childIndex: number) => (
+                                <Fragment key={childIndex}>
+                                  {child.text}
+                                </Fragment>
+                              )
+                            )}
                           </h2>
                         );
                       }
@@ -442,15 +506,25 @@ export default function Details() {
                           ListTag,
                           {
                             key: index,
-                            className: `${node.format === "ordered" ? "list-decimal" : "list-disc"} ml-6 mb-4`,
+                            className: `${
+                              node.format === "ordered"
+                                ? "list-decimal"
+                                : "list-disc"
+                            } ml-6 mb-4`,
                           },
-                          node.children?.map((listItem: any, itemIndex: number) => (
-                            <li key={itemIndex} className="mb-2">
-                              {listItem.children?.map((child: any, childIndex: number) => (
-                                <Fragment key={childIndex}>{child.text}</Fragment>
-                              ))}
-                            </li>
-                          ))
+                          node.children?.map(
+                            (listItem: any, itemIndex: number) => (
+                              <li key={itemIndex} className="mb-2">
+                                {listItem.children?.map(
+                                  (child: any, childIndex: number) => (
+                                    <Fragment key={childIndex}>
+                                      {child.text}
+                                    </Fragment>
+                                  )
+                                )}
+                              </li>
+                            )
+                          )
                         );
                       }
                       return null;
@@ -599,13 +673,28 @@ export default function Details() {
                 }}
               >
                 {item.images[currentImageIndex]?.mime?.startsWith("video") ? (
-                  <div className="max-w-[95vw] max-h-[85vh] object-contain select-none bg-black" style={{ borderRadius: "inherit" }}>
+                  <div
+                    className="max-w-[95vw] max-h-[85vh] object-contain select-none bg-black"
+                    style={{ borderRadius: "inherit" }}
+                  >
                     <video
                       src={item.images[currentImageIndex].src}
                       controls
-                      style={{ borderRadius: "inherit", background: "#000", width: "100%", height: "540px" }}
+                      style={{
+                        borderRadius: "inherit",
+                        background: "#000",
+                        width: "100%",
+                        height: "540px",
+                      }}
                     >
-                      <source src={item.images[currentImageIndex].src} type={item.images[currentImageIndex].src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                      <source
+                        src={item.images[currentImageIndex].src}
+                        type={
+                          item.images[currentImageIndex].src.endsWith(".mov")
+                            ? "video/quicktime"
+                            : "video/mp4"
+                        }
+                      />
                       Tarayıcınız bu videoyu desteklemiyor.
                     </video>
                   </div>

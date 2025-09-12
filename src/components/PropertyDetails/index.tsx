@@ -59,7 +59,7 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
 
     // text property varsa ve type yoksa, bu bir leaf node
     if (content.text && !content.type) {
-      let text = content.text;
+      const text = content.text;
       return text;
     }
 
@@ -110,7 +110,7 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
         )}
 
         <div className="mb-6 prose dark:prose-invert max-w-none">
-          {typeof aciklama === 'string' ? (
+          {typeof aciklama === "string" ? (
             <p>{aciklama}</p>
           ) : (
             renderRichText(aciklama)
@@ -136,7 +136,14 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
                   className="rounded-lg w-full h-48 object-cover hover:scale-105 transition-transform duration-300 bg-black"
                   controls
                 >
-                  <source src={media.src} type={media.src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                  <source
+                    src={media.src}
+                    type={
+                      media.src.endsWith(".mov")
+                        ? "video/quicktime"
+                        : "video/mp4"
+                    }
+                  />
                   Tarayıcınız bu videoyu desteklemiyor.
                 </video>
               ) : (
@@ -194,12 +201,23 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
                 className="max-w-full max-h-full object-contain bg-black"
                 controls
               >
-                <source src={imageUrls[currentImageIndex].src} type={imageUrls[currentImageIndex].src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                <source
+                  src={imageUrls[currentImageIndex].src}
+                  type={
+                    imageUrls[currentImageIndex].src.endsWith(".mov")
+                      ? "video/quicktime"
+                      : "video/mp4"
+                  }
+                />
                 Tarayıcınız bu videoyu desteklemiyor.
               </video>
             ) : (
               <img
-                src={imageUrls[currentImageIndex].src.startsWith("/") ? imageUrls[currentImageIndex].src : `/${imageUrls[currentImageIndex].src}`}
+                src={
+                  imageUrls[currentImageIndex].src.startsWith("/")
+                    ? imageUrls[currentImageIndex].src
+                    : `/${imageUrls[currentImageIndex].src}`
+                }
                 alt={`${baslik || "Mekan"} - Görsel ${currentImageIndex + 1}`}
                 className="max-w-full max-h-full object-contain"
               />
@@ -223,13 +241,25 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
                   }`}
                 >
                   {media.mime?.startsWith("video") ? (
-                    <video className="w-full h-full object-cover bg-black" muted>
-                      <source src={media.src} type={media.src.endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                    <video
+                      className="w-full h-full object-cover bg-black"
+                      muted
+                    >
+                      <source
+                        src={media.src}
+                        type={
+                          media.src.endsWith(".mov")
+                            ? "video/quicktime"
+                            : "video/mp4"
+                        }
+                      />
                       Tarayıcınız bu videoyu desteklemiyor.
                     </video>
                   ) : (
                     <img
-                      src={media.src.startsWith("/") ? media.src : `/${media.src}`}
+                      src={
+                        media.src.startsWith("/") ? media.src : `/${media.src}`
+                      }
                       alt=""
                       className="w-full h-full object-cover"
                     />

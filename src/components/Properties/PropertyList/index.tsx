@@ -173,8 +173,19 @@ const PropertiesListing: React.FC = () => {
                       images:
                         item.resimler?.map((img: any) => ({
                           src: img.url,
-                          mime: img.mime || img.mimeType || (img.url?.endsWith('.mp4') ? 'video/mp4' : img.url?.endsWith('.mov') ? 'video/quicktime' : 'image/jpeg'),
-                          alt: img.alternativeText || img.name || item.baslik || ""
+                          mime:
+                            img.mime ||
+                            img.mimeType ||
+                            (img.url?.endsWith(".mp4")
+                              ? "video/mp4"
+                              : img.url?.endsWith(".mov")
+                              ? "video/quicktime"
+                              : "image/jpeg"),
+                          alt:
+                            img.alternativeText ||
+                            img.name ||
+                            item.baslik ||
+                            "",
                         })) || [],
                     }}
                   />
