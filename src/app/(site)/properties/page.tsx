@@ -15,7 +15,7 @@ const page = () => {
     <>
       <HeroSub
         title="Tüm Mekanlarımız"
-        description="Etkinliğiniz için mükemmel mekanı bulun. Düğünlerden toplantılara, doğum günlerinden kurumsal etkinliklere kadar her organizasyon için uygun mekan seçeneklerimizi keşfedin."
+        description="Reklamdan diziye, filmden kliplere... Projeniz için ihtiyacınız olan mekanı kolayca keşfedin."
         badge="Mekanlar"
         compactPadding={true}
       />

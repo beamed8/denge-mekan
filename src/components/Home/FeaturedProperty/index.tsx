@@ -33,7 +33,6 @@ const FeaturedProperty: React.FC = () => {
     }
   };
 
-
   return (
     <section>
       <div className="container max-w-8xl mx-auto px-5 2xl:px-0">
@@ -65,7 +64,9 @@ const FeaturedProperty: React.FC = () => {
                 <button
                   key={index}
                   onClick={() => handleDotClick(index)}
-                  className={`w-2.5 h-2.5 rounded-full ${current === index + 1 ? "bg-white" : "bg-white/50"}`}
+                  className={`w-2.5 h-2.5 rounded-full ${
+                    current === index + 1 ? "bg-white" : "bg-white/50"
+                  }`}
                 />
               ))}
             </div>
@@ -73,26 +74,43 @@ const FeaturedProperty: React.FC = () => {
           <div className="flex flex-col gap-10">
             <div>
               <p className="text-dark/75 dark:text-white/75 text-base font-semibold flex gap-2">
-                <Icon icon="ph:house-simple-fill" className="text-2xl text-primary " />
+                <Icon
+                  icon="ph:house-simple-fill"
+                  className="text-2xl text-primary "
+                />
                 Öne Çıkan Kategoriler
               </p>
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark dark:text-white leading-tight">
-                Organizasyonunuza en uygun mekanları bulun
+                Çekimlerinize en uygun mekanları bulun
               </h2>
               <div className="flex flex-wrap gap-2.5 mt-2">
-                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">Malikaneler</span>
-                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">Kafeler</span>
-                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">Oteller</span>
-                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">Köşkler</span>
-                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">Daireler</span>
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">
+                  Malikaneler
+                </span>
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">
+                  Kafeler
+                </span>
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">
+                  Oteller
+                </span>
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">
+                  Köşkler
+                </span>
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-base font-medium">
+                  Daireler
+                </span>
               </div>
             </div>
             <p className="text-base text-dark/50 dark:text-white/50">
-              Düğün, toplantı, doğum günü, atölye, lansman, parti ve daha birçok organizasyon için uygun mekanları kolayca keşfedin.
+              Düğün, toplantı, doğum günü, atölye, lansman, parti ve daha birçok
+              organizasyon için uygun mekanları kolayca keşfedin.
             </p>
             {/* Kategori detayları örnek olarak yukarıda badge şeklinde verildi, burada ekstra detay kaldırıldı */}
             <div className="flex gap-10 mt-4">
-              <Link href="/properties" className="py-4 px-8 bg-primary hover:bg-dark duration-300 rounded-full text-white font-semibold text-lg">
+              <Link
+                href="/properties"
+                className="py-4 px-8 bg-primary hover:bg-dark duration-300 rounded-full text-white font-semibold text-lg"
+              >
                 Tüm Mekanları Gör
               </Link>
             </div>

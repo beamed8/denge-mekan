@@ -56,9 +56,9 @@ const Header: React.FC = () => {
         }`}
       >
         <div className="flex justify-between items-center gap-2 w-full">
-          <div>
+          <div className="flex items-center h-full">
             <Link href="/">
-              <LogoWithText sticky={sticky} />
+              <LogoWithText sticky={sticky} isHomepage={isHomepage} />
               {/* <Image
                 src={"/images/header/dark-logo.png"}
                 alt="logo"
@@ -93,7 +93,7 @@ const Header: React.FC = () => {
               /> */}
             </Link>
           </div>
-          <div className="flex items-center gap-2 sm:gap-6">
+          <div className="flex items-center gap-2 sm:gap-6 h-full">
             <button
               className="hover:cursor-pointer"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

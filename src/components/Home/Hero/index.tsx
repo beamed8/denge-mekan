@@ -106,7 +106,7 @@ const Hero: React.FC = () => {
       <div className="w-full flex flex-col items-center justify-center h-full">
         <div className="container max-w-4xl mx-auto px-5 flex flex-col items-center justify-center h-full relative z-10">
           <h1 className="text-white dark:text-white text-4xl sm:text-5xl lg:text-6xl font-bold text-center drop-shadow-2xl mb-8 max-w-5xl leading-tight tracking-tight">
-            Aradığın mekanı bul.
+            Aradığın mekanı bul
           </h1>
 
           <form

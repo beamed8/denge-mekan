@@ -34,8 +34,8 @@ const FAQ: React.FC = () => {
               Mekan Kiralama Hakkında Merak Ettikleriniz
             </h2>
             <p className="text-dark/50 dark:text-white/50 pr-20">
-              Organizasyonunuz için en uygun mekanı bulma sürecinde aklınıza
-              takılan soruların cevaplarını burada bulabilirsiniz.
+              Çekimleriniz için en uygun mekanı bulma sürecinde aklınıza takılan
+              soruların cevaplarını burada bulabilirsiniz.
             </p>
             <div className="my-8">
               <Accordion

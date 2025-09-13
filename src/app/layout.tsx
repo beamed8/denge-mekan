@@ -13,7 +13,7 @@ const font = Bricolage_Grotesque({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Denge Mekan Menajerlik",
   description:
-    "Etkinliğiniz için en uygun mekanları bulun. Malikanelerden kafelere, otellerden köşklere kadar geniş mekan portföyümüzle size hizmet veriyoruz.",
+    "Etkinliğiniz için en uygun mekanları bulun. Mağazalardan kafelere, otellerden dairelere kadar geniş mekan portföyümüzle size hizmet veriyoruz.",
 };
 
 export default function RootLayout({
@@ -25,6 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Fonts: Righteous */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={`${font.className} bg-white dark:bg-black antialiased`}>
         <NextTopLoader color="#07be8a" />
         <SessionProviderComp session={session}>

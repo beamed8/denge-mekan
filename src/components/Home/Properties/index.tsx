@@ -60,11 +60,11 @@ const Properties: React.FC = () => {
             </p>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold text-black dark:text-white text-center tracking-tight leading-tight mb-2 break-words">
-            Organizasyonunuza en uygun mekanları bulun
+            Çekimlerinize en uygun mekanları bulun
           </h2>
           <p className="text-base sm:text-lg md:text-xl font-normal text-black/50 dark:text-white/50 text-center break-words">
-            Her türlü organizasyon için malikanelerden kafelere, otellerden
-            köşklere ve dairelere kadar birçok farklı mekanı kolayca bulun.
+            Her türlü çekiminiz için mağazalardan kafelere, otellerden dairelere
+            ve araçlara kadar birçok farklı mekanı kolayca bulun.
           </p>
         </div>
 
