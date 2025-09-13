@@ -58,9 +58,9 @@ const FAQ: React.FC = () => {
                     2. Fiyatlar ve müsaitlik durumu nasıl öğrenilir?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Her mekanın detay sayfasında fiyat bilgisi ve müsaitlik
-                    durumu yer almaktadır. Ek sorularınız için mekan sahibiyle
-                    iletişime geçebilirsiniz.
+                    Mekan sayfalarının içinde bulunan iletişime geçin butonu ile
+                    bize mail, WhatsApp ve telefon yollarıyla ulaşarak bilgileri
+                    alabilirsiniz.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
@@ -70,6 +70,8 @@ const FAQ: React.FC = () => {
                   <AccordionContent>
                     Düğün, toplantı, doğum günü, atölye, lansman, parti ve daha
                     birçok organizasyon için uygun mekanlar bulabilirsiniz.
+                    Mekan önerileri için menüde bulunan "Mekan Önerisi"
+                    kısmından önerilerinizi yapabilirsiniz.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
