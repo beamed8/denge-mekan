@@ -15,7 +15,11 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
   return (
     <div>
       <div
-        className={`relative rounded-2xl border group hover:shadow-3xl duration-300 dark:hover:shadow-white/20 ${item.featured ? 'border-yellow-300' : 'border-dark/10 dark:border-white/10'}`}
+        className={`relative rounded-2xl border group hover:shadow-3xl duration-300 dark:hover:shadow-white/20 ${
+          item.featured
+            ? "border-yellow-300"
+            : "border-dark/10 dark:border-white/10"
+        }`}
       >
         <div className="overflow-hidden rounded-t-2xl">
           <Link href={`/properties/${item.slug}`}>
@@ -39,7 +43,7 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
                   width={32}
                   height={32}
                   className="text-yellow-400 drop-shadow-lg featured-star"
-                  style={{ filter: 'drop-shadow(0 0 8px #ffe066)' }}
+                  style={{ filter: "drop-shadow(0 0 8px #ffe066)" }}
                 />
               </span>
             </div>

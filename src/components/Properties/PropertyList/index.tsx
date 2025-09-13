@@ -196,10 +196,13 @@ const PropertiesListing: React.FC = () => {
             {matchedKategori && kategoriMekanlar.length > 0 && (
               <div className="mb-10 border-2 border-blue-300 rounded-xl p-6 bg-blue-50">
                 <h2 className="text-2xl font-bold text-blue-700 mb-4">
-                  "{matchedKategori.ad}" kategorisindeki mekanlar:
+                  &quot;{matchedKategori.ad}&quot; kategorisindeki mekanlar:
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                  {[...kategoriMekanlar.filter(e => e.featured), ...kategoriMekanlar.filter(e => !e.featured)].map((item, index) => (
+                  {[
+                    ...kategoriMekanlar.filter((e) => e.featured),
+                    ...kategoriMekanlar.filter((e) => !e.featured),
+                  ].map((item, index) => (
                     <div key={index}>
                       <PropertyCard
                         item={{
@@ -240,10 +243,14 @@ const PropertiesListing: React.FC = () => {
             {matchedLokasyon && lokasyonMekanlar.length > 0 && (
               <div className="mb-10 border-2 border-green-300 rounded-xl p-6 bg-green-50">
                 <h2 className="text-2xl font-bold text-green-700 mb-4">
-                  "{lokasyonMekanlar[0]?.lokasyon}" lokasyonundaki mekanlar:
+                  &quot;{lokasyonMekanlar[0]?.lokasyon}&quot; lokasyonundaki
+                  mekanlar:
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                  {[...lokasyonMekanlar.filter(e => e.featured), ...lokasyonMekanlar.filter(e => !e.featured)].map((item, index) => (
+                  {[
+                    ...lokasyonMekanlar.filter((e) => e.featured),
+                    ...lokasyonMekanlar.filter((e) => !e.featured),
+                  ].map((item, index) => (
                     <div key={index}>
                       <PropertyCard
                         item={{
@@ -284,7 +291,10 @@ const PropertiesListing: React.FC = () => {
             {digerMekanlar.length > 0 && (
               <div className="mb-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                  {[...digerMekanlar.filter(e => e.featured), ...digerMekanlar.filter(e => !e.featured)].map((item, index) => (
+                  {[
+                    ...digerMekanlar.filter((e) => e.featured),
+                    ...digerMekanlar.filter((e) => !e.featured),
+                  ].map((item, index) => (
                     <div key={index}>
                       <PropertyCard
                         item={{

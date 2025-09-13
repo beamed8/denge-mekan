@@ -24,8 +24,8 @@ const Properties: React.FC = () => {
     return shuffled.slice(0, count);
   }
 
-  let featured = emlaklar.filter((e) => e.featured);
-  let nonFeatured = emlaklar.filter((e) => !e.featured);
+  const featured = emlaklar.filter((e) => e.featured);
+  const nonFeatured = emlaklar.filter((e) => !e.featured);
   let selected: any[] = [];
   // Featured'lar en önde olacak şekilde sıralama
   if (featured.length >= 3) {
@@ -37,7 +37,10 @@ const Properties: React.FC = () => {
     ];
   }
   // Featured'lar en önde olacak şekilde diziyi sırala
-  selected = [...selected.filter(e => e.featured), ...selected.filter(e => !e.featured)];
+  selected = [
+    ...selected.filter((e) => e.featured),
+    ...selected.filter((e) => !e.featured),
+  ];
 
   return (
     <section className="overflow-x-hidden w-full">
