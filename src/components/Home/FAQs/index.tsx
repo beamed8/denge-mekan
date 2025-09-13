@@ -70,8 +70,8 @@ const FAQ: React.FC = () => {
                   <AccordionContent>
                     Düğün, toplantı, doğum günü, atölye, lansman, parti ve daha
                     birçok organizasyon için uygun mekanlar bulabilirsiniz.
-                    Mekan önerileri için menüde bulunan "Mekan Önerisi"
-                    kısmından önerilerinizi yapabilirsiniz.
+                    Mekan önerileri için menüde bulunan &quot;Mekan
+                    Önerisi&quot; kısmından önerilerinizi yapabilirsiniz.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
