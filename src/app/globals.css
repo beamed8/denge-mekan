@@ -1,3 +1,23 @@
+/* Featured Star Animation */
+.featured-star {
+  transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55), filter 0.3s;
+}
+.group:hover .featured-star {
+  transform: scale(1.18) rotate(-18deg);
+  filter: drop-shadow(0 0 8px #ffe066);
+}
+.animate-featured-star {
+  animation: featuredStarBreath 2.8s infinite ease-in-out;
+}
+@keyframes featuredStarBreath {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.13); }
+  60% { transform: scale(1.18); }
+}
+/* Featured card border color (tailwind override) */
+.border-yellow-300 {
+  border-color: #fde047 !important;
+}
 @import 'tailwindcss';
 @plugin 'tailwindcss-animate';
 

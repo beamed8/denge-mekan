@@ -44,14 +44,12 @@ const FAQ: React.FC = () => {
                 collapsible
                 className="w-full flex flex-col gap-6"
               >
-                {/* 1. soru kaldırıldı */}
                 <AccordionItem value="item-2">
                   <AccordionTrigger>
                     1. Mekanları kiralamak için ne yapmam gerekiyor?
                   </AccordionTrigger>
                   <AccordionContent>
-                    Beğendiğiniz bir mekanı seçtikten sonra, detay sayfasındaki
-                    iletişim formunu doldurarak veya doğrudan iletişime geçerek
+                    İletişim sayfasından bizimle iletişime geçebilir ve
                     rezervasyon talebinizi iletebilirsiniz.
                   </AccordionContent>
                 </AccordionItem>
@@ -74,7 +72,6 @@ const FAQ: React.FC = () => {
                     birçok organizasyon için uygun mekanlar bulabilirsiniz.
                   </AccordionContent>
                 </AccordionItem>
-                {/* 5. soru kaldırıldı */}
               </Accordion>
             </div>
           </div>

@@ -18,9 +18,30 @@ const Properties: React.FC = () => {
     fetchData();
   }, []);
 
+  // Rastgele 3 mekan seçme (öncelik featured olanlarda)
+  function getRandomItems(arr: any[], count: number) {
+    const shuffled = arr.slice().sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  let featured = emlaklar.filter((e) => e.featured);
+  let nonFeatured = emlaklar.filter((e) => !e.featured);
+  let selected: any[] = [];
+  // Featured'lar en önde olacak şekilde sıralama
+  if (featured.length >= 3) {
+    selected = getRandomItems(featured, 3);
+  } else {
+    selected = [
+      ...getRandomItems(featured, featured.length),
+      ...getRandomItems(nonFeatured, 3 - featured.length),
+    ];
+  }
+  // Featured'lar en önde olacak şekilde diziyi sırala
+  selected = [...selected.filter(e => e.featured), ...selected.filter(e => !e.featured)];
+
   return (
-    <section>
-      <div className="container max-w-8xl mx-auto px-5 2xl:px-0">
+    <section className="overflow-x-hidden w-full">
+      <div className="container max-w-8xl mx-auto px-4 sm:px-5 2xl:px-0 w-full">
         <div className="mb-16 flex flex-col gap-3 ">
           <div className="flex gap-2.5 items-center justify-center">
             <span>
@@ -35,17 +56,17 @@ const Properties: React.FC = () => {
               Mekanlar
             </p>
           </div>
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-black dark:text-white text-center tracking-tight leading-tight mb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold text-black dark:text-white text-center tracking-tight leading-tight mb-2 break-words">
             Organizasyonunuza en uygun mekanları bulun
           </h2>
-          <p className="text-xm font-normal text-black/50 dark:text-white/50 text-center">
+          <p className="text-base sm:text-lg md:text-xl font-normal text-black/50 dark:text-white/50 text-center break-words">
             Her türlü organizasyon için malikanelerden kafelere, otellerden
             köşklere ve dairelere kadar birçok farklı mekanı kolayca bulun.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-          {emlaklar.slice(0, 3).map((item, index) => (
+          {selected.map((item, index) => (
             <div key={index}>
               <PropertyCard
                 item={{
@@ -58,6 +79,7 @@ const Properties: React.FC = () => {
                   slug: item.slug,
                   kategori: item.kategori,
                   aciklama: item.aciklama,
+                  featured: item.featured,
                   images: item.resimler.map((img: any) => ({
                     src: img.url,
                     mime:

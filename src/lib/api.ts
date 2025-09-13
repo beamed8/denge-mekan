@@ -14,8 +14,22 @@ export async function getEmlaklar() {
   }
 
   const data = await res.json();
+  console.log("RAW emlaklar API response:", data);
+  data.data.forEach((item: any, idx: number) => {
+    console.log(`Emlak #${idx} full object:`, item);
+  });
 
   return data.data.map((item: any) => {
+    // Strapi relation: kategoris is a single object (not array)
+    const kategori = item.kategoris
+      ? [
+          {
+            id: item.kategoris.id,
+            ad: item.kategoris.ad,
+            slug: item.kategoris.slug,
+          },
+        ]
+      : [];
     return {
       id: item.id,
       documentId: item.documentId,
@@ -25,7 +39,8 @@ export async function getEmlaklar() {
       lokasyon: item.lokasyon,
       ilanTipi: item.ilanTipi,
       slug: item.slug,
-      kategori: Array.isArray(item.kategori) ? item.kategori : [],
+      kategori,
+      featured: item.featured ?? false,
       resimler: (item.resimler || []).map((img: any) => ({
         id: img.id,
         url: img.url.startsWith("http") ? img.url : `${API_URL}${img.url}`,

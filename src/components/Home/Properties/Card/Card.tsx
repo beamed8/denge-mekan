@@ -14,7 +14,9 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
 
   return (
     <div>
-      <div className="relative rounded-2xl border border-dark/10 dark:border-white/10 group hover:shadow-3xl duration-300 dark:hover:shadow-white/20">
+      <div
+        className={`relative rounded-2xl border group hover:shadow-3xl duration-300 dark:hover:shadow-white/20 ${item.featured ? 'border-yellow-300' : 'border-dark/10 dark:border-white/10'}`}
+      >
         <div className="overflow-hidden rounded-t-2xl">
           <Link href={`/properties/${item.slug}`}>
             {mainImage && (
@@ -28,6 +30,20 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
               />
             )}
           </Link>
+          {/* Featured Star Icon */}
+          {item.featured && (
+            <div className="absolute top-6 left-6 z-10">
+              <span className="inline-block animate-featured-star">
+                <Icon
+                  icon="ph:star-fill"
+                  width={32}
+                  height={32}
+                  className="text-yellow-400 drop-shadow-lg featured-star"
+                  style={{ filter: 'drop-shadow(0 0 8px #ffe066)' }}
+                />
+              </span>
+            </div>
+          )}
           <div className="absolute top-6 right-6 p-4 bg-white rounded-full hidden group-hover:block">
             <Icon
               icon={"solar:arrow-right-linear"}
@@ -38,22 +54,35 @@ const PropertyCard: React.FC<{ item: PropertyHomes }> = ({ item }) => {
           </div>
         </div>
         <div className="p-6">
-          <div className="flex flex-col mobile:flex-row gap-5 mobile:gap-0 justify-between mb-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-6">
             <div>
               <Link href={`/properties/${item.slug}`}>
                 <h3 className="text-xl font-medium text-black dark:text-white duration-300 group-hover:text-primary">
                   {name}
                 </h3>
               </Link>
-              <p className="text-base font-normal text-black/50 dark:text-white/50">
-                {location}
-              </p>
+              {location && (
+                <p className="flex items-center gap-2 text-base font-normal text-black/50 dark:text-white/50 mt-1">
+                  <Icon
+                    icon="ph:map-pin-fill"
+                    className="text-primary"
+                    width={18}
+                    height={18}
+                  />
+                  {location}
+                </p>
+              )}
             </div>
-            {item.kategori?.ad && (
-              <div>
-                <span className="text-base font-semibold text-primary px-5 py-2 rounded-full bg-primary/10">
-                  {item.kategori.ad}
-                </span>
+            {Array.isArray(item.kategori) && item.kategori.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2 sm:mt-0">
+                {item.kategori.map((kat) => (
+                  <span
+                    key={kat.id}
+                    className="inline-block text-xs sm:text-sm font-semibold text-primary px-3 py-1 rounded-full bg-primary/10 border border-primary/20 shadow-sm whitespace-nowrap"
+                  >
+                    {kat.ad}
+                  </span>
+                ))}
               </div>
             )}
           </div>

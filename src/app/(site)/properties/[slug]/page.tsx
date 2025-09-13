@@ -284,13 +284,27 @@ export default function Details() {
                 />
               </div>
             </div>
-            <h1 className="lg:text-52 text-40 font-semibold text-dark dark:text-white">
-              {item?.name}
-            </h1>
+            <div className="flex flex-col gap-2 mb-2">
+              <h1 className="lg:text-52 text-40 font-semibold text-dark dark:text-white">
+                {item?.name}
+              </h1>
+              {Array.isArray(item?.kategori) && item.kategori.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {item.kategori.map((kat: any) => (
+                    <span
+                      key={kat.id}
+                      className="inline-block text-xs sm:text-sm font-semibold text-primary px-3 py-1 rounded-full bg-primary/10 border border-primary/20 shadow-sm whitespace-nowrap"
+                    >
+                      {kat.ad}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
             {item?.location && (
               <div className="flex gap-2.5">
                 <Icon
-                  icon="ph:map-pin"
+                  icon="ph:map-pin-fill"
                   width={24}
                   height={24}
                   className="text-dark/50 dark:text-white/50"
@@ -308,7 +322,10 @@ export default function Details() {
             {item?.images &&
               item.images[0] &&
               (item.images[0].mime?.startsWith("video") ? (
-                <div className="rounded-2xl w-full h-[632px] object-cover bg-black relative">
+                <div
+                  className="rounded-2xl w-full h-[632px] object-cover bg-black relative cursor-pointer"
+                  onClick={() => openLightbox(0)}
+                >
                   <video
                     src={item.images[0].src}
                     controls
@@ -332,7 +349,10 @@ export default function Details() {
                   </video>
                 </div>
               ) : (
-                <div className="rounded-2xl w-full h-[632px] relative">
+                <div
+                  className="rounded-2xl w-full h-[632px] relative cursor-pointer"
+                  onClick={() => openLightbox(0)}
+                >
                   <Image
                     src={item.images[0].src}
                     alt={item.images[0].alt || item.name}
@@ -345,7 +365,10 @@ export default function Details() {
           </div>
           <div className="lg:col-span-4 lg:block hidden">
             {item?.images && item?.images[1] && (
-              <div className="cursor-pointer relative h-[300px]" onClick={() => openLightbox(1)}>
+              <div
+                className="cursor-pointer relative h-[300px]"
+                onClick={() => openLightbox(1)}
+              >
                 {item.images[1].mime?.startsWith("video") ? (
                   <div className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity bg-black">
                     <video
@@ -384,7 +407,10 @@ export default function Details() {
           </div>
           <div className="lg:col-span-2 col-span-6">
             {item?.images && item?.images[2] && (
-              <div className="cursor-pointer relative h-[300px]" onClick={() => openLightbox(2)}>
+              <div
+                className="cursor-pointer relative h-[300px]"
+                onClick={() => openLightbox(2)}
+              >
                 {item.images[2].mime?.startsWith("video") ? (
                   <div className="rounded-2xl w-full h-full object-cover hover:opacity-90 transition-opacity bg-black">
                     <video
@@ -478,6 +504,11 @@ export default function Details() {
               <div className="prose dark:prose-invert max-w-none text-dark dark:text-white text-xm">
                 {Array.isArray(item?.aciklama) ? (
                   <div className="space-y-4">
+                    {item.aciklama.length === 0 && (
+                      <p className="text-gray-400 italic">
+                        Mekan açıklaması bulunmamaktadır.
+                      </p>
+                    )}
                     {item.aciklama.map((node, index) => {
                       if (node.type === "paragraph") {
                         return (
@@ -549,7 +580,13 @@ export default function Details() {
                     })}
                   </div>
                 ) : (
-                  <p>{item?.aciklama}</p>
+                  <p
+                    className={
+                      item?.aciklama ? undefined : "text-gray-400 italic"
+                    }
+                  >
+                    {item?.aciklama || "Mekan açıklaması bulunmamaktadır."}
+                  </p>
                 )}
               </div>
             </div>
@@ -589,12 +626,23 @@ export default function Details() {
         {lightboxOpen && item?.images && (
           <div
             className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-            onClick={closeLightbox}
+            style={{ position: "fixed", inset: 0, zIndex: 50 }}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
             tabIndex={0}
           >
+            {/* Tüm boş alanı dolduran arka plan, modal içeriğinin arkasında */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: 0,
+              }}
+              onClick={closeLightbox}
+            />
             {/* Kapatma Butonu */}
             <button
               onClick={closeLightbox}

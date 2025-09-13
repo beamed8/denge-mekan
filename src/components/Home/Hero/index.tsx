@@ -84,8 +84,15 @@ const Hero: React.FC = () => {
           height: "100%",
           objectFit: "cover",
           zIndex: -20,
+          background: "transparent",
+          mixBlendMode: "normal",
+          boxShadow: "none",
+          border: "none",
         }}
         data-darkreader-ignore
+        data-darkreader-inline-fill
+        data-darkreader-inline-bgcolor
+        data-darkreader-inline-bgimage
       >
         <source
           src="https://videos.pexels.com/video-files/9810700/9810700-uhd_2732_1440_25fps.mp4"

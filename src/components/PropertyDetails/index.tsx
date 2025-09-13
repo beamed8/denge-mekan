@@ -14,9 +14,9 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
   const attributes = data?.attributes || {};
   const { baslik, aciklama, resimler, fiyat, lokasyon, slug } = attributes;
   const breadcrumbLinks = [
-    { href: '/', text: 'Anasayfa' },
-    { href: '/properties', text: 'Mekanlar' },
-    { href: `/properties/${slug || ''}`, text: baslik || 'Detay' },
+    { href: "/", text: "Anasayfa" },
+    { href: "/properties", text: "Mekanlar" },
+    { href: `/properties/${slug || ""}`, text: baslik || "Detay" },
   ];
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -107,7 +107,7 @@ const PropertyDetails = ({ data }: PropertyDetailsProps) => {
   return (
     <>
       {/* Breadcrumb */}
-      <div className="pt-6 pb-2">
+      <div className="pt-6 px-4 ">
         <Breadcrumb links={breadcrumbLinks} />
       </div>
       <div className="container py-12">

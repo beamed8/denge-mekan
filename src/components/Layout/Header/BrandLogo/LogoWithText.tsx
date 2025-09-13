@@ -17,11 +17,13 @@ const LogoWithText: React.FC<LogoWithTextProps> = ({ sticky }) => {
       <span
         className={`${dancingScript.className} transition-all duration-300 ${
           sticky
-            ? "text-2xl sm:text-xl text-gray-900 dark:text-white"
-            : "text-3xl sm:text-xl text-gray-400 dark:text-white"
+            ? "text-gray-900 dark:text-white"
+            : "text-gray-400 dark:text-white"
         }`}
       >
-        Doğru Mekan, Doğru Kare
+        <span className="block sm:inline">Doğru Mekan, </span>
+        {/* <span className="block sm:inline">, </span> */}
+        <span className="block sm:inline">Doğru Kare</span>
       </span>
     </div>
   );

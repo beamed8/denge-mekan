@@ -57,7 +57,7 @@ export default function ContactUs() {
             <div className="flex-1 flex flex-col gap-4">
               <div className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
                 <Icon
-                  icon={"ph:phone"}
+                  icon={"ph:phone-fill"}
                   width={28}
                   height={28}
                   className="text-white"
@@ -73,7 +73,7 @@ export default function ContactUs() {
               </div>
               <div className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
                 <Icon
-                  icon={"ph:envelope-simple"}
+                  icon={"ph:envelope-simple-fill"}
                   width={28}
                   height={28}
                   className="text-white"
@@ -89,7 +89,7 @@ export default function ContactUs() {
               </div>
               <div className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
                 <Icon
-                  icon={"ph:map-pin"}
+                  icon={"ph:map-pin-fill"}
                   width={28}
                   height={28}
                   className="text-white"

@@ -12,6 +12,7 @@ export type PropertyHomes = {
     [key: string]: any;
   };
   aciklama?: string;
+  featured?: boolean;
 };
 
 interface PropertyImage {
