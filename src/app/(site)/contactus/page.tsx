@@ -87,7 +87,7 @@ export default function ContactUs() {
                   </a>
                 </span>
               </div>
-              <div className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
+              {/* <div className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3">
                 <Icon
                   icon={"ph:map-pin-fill"}
                   width={28}
@@ -97,7 +97,7 @@ export default function ContactUs() {
                 <span className="text-base font-semibold text-white tracking-wide">
                   Maslak Mah. Büyükdere Cad. No:100, Sarıyer / İSTANBUL
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="mt-4">

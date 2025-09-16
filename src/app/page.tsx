@@ -42,7 +42,7 @@ export default function Home() {
             </div>
 
             {/* İletişim Bilgileri */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
               <a
                 href="tel:+905337131076"
                 className="flex flex-col items-center p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 group"
@@ -64,12 +64,12 @@ export default function Home() {
                   <span className="text-2xl">✉️</span>
                 </div>
                 <h3 className="font-semibold text-white mb-2">E-posta</h3>
-                <div className="text-gray-300 hover:text-primary transition-colors text-center text-sm">
+                <div className="text-gray-300 hover:text-primary transition-colors text-center">
                   dengemekanmenajerlik@gmail.com
                 </div>
               </a>
 
-              <div className="flex flex-col items-center p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 group">
+              {/* <div className="flex flex-col items-center p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 group">
                 <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors">
                   <span className="text-2xl">📍</span>
                 </div>
@@ -79,7 +79,7 @@ export default function Home() {
                   <br />
                   Sarıyer / İSTANBUL
                 </span>
-              </div>
+              </div> */}
 
               <a
                 href="https://wa.me/905337131076?text=Merhaba, daha fazla mekan hakkında bilgi almak istiyorum."
