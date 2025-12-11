@@ -2,24 +2,26 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 const API_BASE = `${API_URL}/api`;
 
-// Emlakları getir
-export async function getEmlaklar() {
+// Emlakları getir (with pagination)
+export async function getEmlaklar(page: number = 1, pageSize: number = 12) {
   const res = await fetch(
-    `${API_URL}/api/emlaks?populate=kategoris&populate=resimler`
+    `${API_URL}/api/emlaks?populate=kategoris&populate=resimler&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
   );
 
   if (!res.ok) {
     console.error("Emlaklar API çağrısı başarısız", res.status);
-    return [];
+    return { data: [], meta: { pagination: { total: 0, page: 1, pageSize: 12, pageCount: 0 } } };
   }
 
-  const data = await res.json();
-  console.log("RAW emlaklar API response:", data);
-  data.data.forEach((item: any, idx: number) => {
+  const response = await res.json();
+  console.log("RAW emlaklar API response:", response);
+  
+  const data = response.data || [];
+  data.forEach((item: any, idx: number) => {
     console.log(`Emlak #${idx} full object:`, item);
   });
 
-  return data.data.map((item: any) => {
+  const transformedData = data.map((item: any) => {
     // Strapi relation: kategoris is a single object (not array)
     const kategori = item.kategoris
       ? [
@@ -48,6 +50,11 @@ export async function getEmlaklar() {
       })),
     };
   });
+
+  return {
+    data: transformedData,
+    meta: response.meta || { pagination: { total: 0, page: 1, pageSize: 12, pageCount: 0 } }
+  };
 }
 
 // Kategorileri getir

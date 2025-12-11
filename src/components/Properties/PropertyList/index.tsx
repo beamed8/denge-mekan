@@ -3,9 +3,10 @@ import Link from "next/link";
 import PropertyCard from "@/components/Home/Properties/Card/Card";
 import Breadcrumb from "@/components/Breadcrumb";
 import { getEmlaklar, getKategoriler } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Search } from "lucide-react";
+import Pagination from "@/components/shared/Pagination";
 
 const kategoriAliases: Record<string, string[]> = {
   konut: ["ev", "daire", "residans"],
@@ -27,6 +28,12 @@ const PropertiesListing: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const kategoriParam = searchParams?.get("kategori") || "";
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize] = useState(12); // 12 items per page
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Türkçe karakterleri normalize eden fonksiyon
   function normalize(str?: string | null) {
@@ -58,17 +65,19 @@ const PropertiesListing: React.FC = () => {
     async function fetchData() {
       setLoading(true);
       try {
-        const [emlakData, kategoriData] = await Promise.all([
-          getEmlaklar(),
+        const [emlakResponse, kategoriData] = await Promise.all([
+          getEmlaklar(currentPage, pageSize),
           getKategoriler(),
         ]);
-        setEmlaklar(emlakData);
+        setEmlaklar(emlakResponse.data);
         setKategoriler(kategoriData);
+        setTotalPages(emlakResponse.meta.pagination.pageCount);
         // Debug: log fetched data
-        console.log("Fetched emlaklar:", emlakData);
+        console.log("Fetched emlaklar:", emlakResponse.data);
+        console.log("Pagination meta:", emlakResponse.meta);
         console.log("Fetched kategoriler:", kategoriData);
-        if (emlakData.length > 0) {
-          console.log("First emlak entry kategori:", emlakData[0]?.kategori);
+        if (emlakResponse.data.length > 0) {
+          console.log("First emlak entry kategori:", emlakResponse.data[0]?.kategori);
         }
       } catch (error) {
         console.error("Veri yükleme hatası:", error);
@@ -77,7 +86,7 @@ const PropertiesListing: React.FC = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [currentPage, pageSize]);
 
   const term = normalize(kategoriParam);
 
@@ -160,8 +169,19 @@ const PropertiesListing: React.FC = () => {
       })
     : emlaklar;
 
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Smooth scroll to top of results
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="pt-0!">
+    <section className="pt-0!" ref={scrollContainerRef}>
       <div className="container max-w-8xl mx-auto px-5 2xl:px-0">
         <div className="w-full max-w-3xl mx-auto flex items-center bg-white/90 dark:bg-dark/80 rounded-full shadow-lg px-6 py-3 gap-2 mb-12">
           <Search className="text-primary w-6 h-6" />
@@ -370,6 +390,16 @@ const PropertiesListing: React.FC = () => {
                 </div>
               )}
           </>
+        )}
+        
+        {/* Pagination */}
+        {!loading && digerMekanlar.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            className="mt-16 mb-8"
+          />
         )}
       </div>
     </section>

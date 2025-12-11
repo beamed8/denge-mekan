@@ -12,8 +12,8 @@ const Properties: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getEmlaklar();
-      setEmlaklar(data);
+      const response = await getEmlaklar(1, 100); // Fetch all items for home page
+      setEmlaklar(response.data);
     }
     fetchData();
   }, []);
