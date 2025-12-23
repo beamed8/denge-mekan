@@ -12,7 +12,7 @@ const Properties: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getEmlaklar(1, 100); // Fetch all items for home page
+      const response = await getEmlaklar(1, 12); // Fetch 12 items for home page
       setEmlaklar(response.data);
     }
     fetchData();
