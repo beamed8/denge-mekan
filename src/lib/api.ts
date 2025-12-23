@@ -3,9 +3,19 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 const API_BASE = `${API_URL}/api`;
 
 // Emlakları getir (with pagination)
-export async function getEmlaklar(page: number = 1, pageSize: number = 12) {
+export async function getEmlaklar(
+  page: number = 1, 
+  pageSize: number = 12, 
+  sortField: string = "createdAt", 
+  sortOrder: "asc" | "desc" = "desc",
+  prioritizeFeatured: boolean = true
+) {
+  const sortParams = prioritizeFeatured 
+    ? `sort[0]=featured:asc&sort[1]=${sortField}:${sortOrder}`
+    : `sort[0]=${sortField}:${sortOrder}`;
+
   const res = await fetch(
-    `${API_URL}/api/emlaks?populate=kategoris&populate=resimler&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+    `${API_URL}/api/emlaks?populate[0]=kategoris&populate[1]=resimler&pagination[page]=${page}&pagination[pageSize]=${pageSize}&${sortParams}`
   );
 
   if (!res.ok) {
@@ -135,4 +145,31 @@ export async function getEmlakDetayById(id: string) {
       alternativeText: img.alternativeText,
     })),
   };
+}
+
+// Arama önerileri için kategoriler, lokasyonlar ve başlıkları getir
+export async function getSearchSuggestions() {
+  try {
+    const [emlakRes, kategoriData] = await Promise.all([
+      fetch(`${API_URL}/api/emlaks?fields[0]=baslik&fields[1]=lokasyon&pagination[pageSize]=100`).then(r => r.json()),
+      getKategoriler()
+    ]);
+
+    const emlakData = emlakRes.data || [];
+    
+    // Benzersiz lokasyonlar
+    const locations = Array.from(new Set(emlakData.map((item: any) => item.lokasyon))).filter(Boolean);
+    // Başlıklar
+    const titles = emlakData.map((item: any) => item.baslik).filter(Boolean);
+    // Kategoriler zaten kategoriData içinde
+
+    return {
+      kategoriler: kategoriData,
+      locations,
+      titles
+    };
+  } catch (error) {
+    console.error("Öneriler alınamadı:", error);
+    return { kategoriler: [], locations: [], titles: [] };
+  }
 }

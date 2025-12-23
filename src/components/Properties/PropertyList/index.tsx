@@ -5,8 +5,9 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { getEmlaklar, getKategoriler } from "@/lib/api";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search } from "lucide-react";
 import Pagination from "@/components/shared/Pagination";
+import SearchBar from "@/components/shared/SearchBar";
+import { Filter } from "lucide-react";
 
 const kategoriAliases: Record<string, string[]> = {
   konut: ["ev", "daire", "residans"],
@@ -24,15 +25,30 @@ const PropertiesListing: React.FC = () => {
   const [emlaklar, setEmlaklar] = useState<any[]>([]);
   const [kategoriler, setKategoriler] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [input, setInput] = useState("");
   const searchParams = useSearchParams();
   const router = useRouter();
   const kategoriParam = searchParams?.get("kategori") || "";
   
-  // Pagination state
+  // Pagination ve Sort state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize] = useState(12); // 12 items per page
+  
+  const sortParam = searchParams?.get("sort");
+  const [sortOption, setSortOption] = useState<{ field: string; order: "asc" | "desc"; recommended?: boolean }>(() => {
+    if (sortParam === "newest") {
+      return { field: "createdAt", order: "desc", recommended: false };
+    }
+    return { field: "createdAt", order: "desc", recommended: true };
+  });
+
+  // URL'den sort değişirse state'i güncelle
+  useEffect(() => {
+    if (sortParam === "newest") {
+      setSortOption({ field: "createdAt", order: "desc", recommended: false });
+    }
+  }, [sortParam]);
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Türkçe karakterleri normalize eden fonksiyon
@@ -51,34 +67,36 @@ const PropertiesListing: React.FC = () => {
       .replace(/ler$|lar$/g, "");
   }
 
-  // Arama fonksiyonu
-  function handleSearch(e: React.FormEvent) {
-    e.preventDefault();
-    if (!input.trim()) {
-      router.push("/properties");
-      return;
-    }
-    router.push(`/properties?kategori=${encodeURIComponent(input.trim())}`);
-  }
+  // Arama fonksiyonu (Artık SearchBar tarafından yönetiliyor)
+  // function handleSearch(e: React.FormEvent) { ... }
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
       try {
         const [emlakResponse, kategoriData] = await Promise.all([
-          getEmlaklar(currentPage, pageSize),
+          getEmlaklar(
+            currentPage, 
+            pageSize, 
+            sortOption.field, 
+            sortOption.order, 
+            !!sortOption.recommended
+          ),
           getKategoriler(),
         ]);
-        setEmlaklar(emlakResponse.data);
+        if (sortOption.recommended) {
+          // Frontend safety sort to ensure featured items are at the very top
+          const sorted = [...emlakResponse.data].sort((a, b) => {
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+            return 0;
+          });
+          setEmlaklar(sorted);
+        } else {
+          setEmlaklar(emlakResponse.data);
+        }
         setKategoriler(kategoriData);
         setTotalPages(emlakResponse.meta.pagination.pageCount);
-        // Debug: log fetched data
-        console.log("Fetched emlaklar:", emlakResponse.data);
-        console.log("Pagination meta:", emlakResponse.meta);
-        console.log("Fetched kategoriler:", kategoriData);
-        if (emlakResponse.data.length > 0) {
-          console.log("First emlak entry kategori:", emlakResponse.data[0]?.kategori);
-        }
       } catch (error) {
         console.error("Veri yükleme hatası:", error);
       } finally {
@@ -86,7 +104,7 @@ const PropertiesListing: React.FC = () => {
       }
     }
     fetchData();
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, sortOption]);
 
   const term = normalize(kategoriParam);
 
@@ -183,23 +201,39 @@ const PropertiesListing: React.FC = () => {
   return (
     <section className="pt-0!" ref={scrollContainerRef}>
       <div className="container max-w-8xl mx-auto px-5 2xl:px-0">
-        <div className="w-full max-w-3xl mx-auto flex items-center bg-white/90 dark:bg-dark/80 rounded-full shadow-lg px-6 py-3 gap-2 mb-12">
-          <Search className="text-primary w-6 h-6" />
-          <form className="flex-grow flex items-center" onSubmit={handleSearch}>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+        <div className="flex flex-col items-center gap-8 mb-16">
+          <div className="w-full max-w-2xl">
+            <SearchBar 
+              initialValue={kategoriParam} 
               placeholder="Etkinlik türü, şehir, kategori veya mekan adı ile arayın..."
-              className="flex-grow bg-transparent outline-none text-gray-900 dark:text-white text-lg placeholder-gray-500 dark:placeholder-white px-2"
             />
-            <button
-              type="submit"
-              className="bg-primary hover:bg-primary/80 rounded-full px-10 py-3 font-semibold text-white text-lg transition-colors shadow-md ml-2"
-            >
-              Ara
-            </button>
-          </form>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-6 py-2.5 bg-white/50 dark:bg-dark/40 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:border-primary/30">
+              <Filter className="w-4 h-4 text-primary" />
+              <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Sıralama:</span>
+              <select 
+                value={sortOption.recommended ? "recommended" : `${sortOption.field}:${sortOption.order}`}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "recommended") {
+                    setSortOption({ field: "createdAt", order: "desc", recommended: true });
+                  } else {
+                    const [field, order] = val.split(":");
+                    setSortOption({ field, order: order as "asc" | "desc", recommended: false });
+                  }
+                  setCurrentPage(1);
+                }}
+                className="bg-transparent outline-none text-sm font-bold text-gray-900 dark:text-white cursor-pointer pr-2"
+              >
+                <option value="recommended">Önerilen</option>
+                <option value="createdAt:desc">Yeniden Eskiye</option>
+                <option value="createdAt:asc">Eskiden Yeniye</option>
+                <option value="baslik:asc">Alfabetik (A-Z)</option>
+              </select>
+            </div>
+          </div>
         </div>
         {/* ...existing code... */}
         {loading ? (
@@ -219,10 +253,7 @@ const PropertiesListing: React.FC = () => {
                   &quot;{matchedKategori.ad}&quot; kategorisindeki mekanlar:
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                  {[
-                    ...kategoriMekanlar.filter((e) => e.featured),
-                    ...kategoriMekanlar.filter((e) => !e.featured),
-                  ].map((item, index) => (
+                  {kategoriMekanlar.map((item, index) => (
                     <div key={index}>
                       <PropertyCard
                         item={{
@@ -267,10 +298,7 @@ const PropertiesListing: React.FC = () => {
                   mekanlar:
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                  {[
-                    ...lokasyonMekanlar.filter((e) => e.featured),
-                    ...lokasyonMekanlar.filter((e) => !e.featured),
-                  ].map((item, index) => (
+                  {lokasyonMekanlar.map((item, index) => (
                     <div key={index}>
                       <PropertyCard
                         item={{
@@ -311,10 +339,7 @@ const PropertiesListing: React.FC = () => {
             {digerMekanlar.length > 0 && (
               <div className="mb-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                  {[
-                    ...digerMekanlar.filter((e) => e.featured),
-                    ...digerMekanlar.filter((e) => !e.featured),
-                  ].map((item, index) => (
+                  {digerMekanlar.map((item, index) => (
                     <div key={index}>
                       <PropertyCard
                         item={{

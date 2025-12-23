@@ -2,9 +2,7 @@ import FeaturedProperty from "@/components/Home/FeaturedProperty";
 import Hero from "@/components/Home/Hero";
 import Properties from "@/components/Home/Properties";
 import Services from "@/components/Home/Services";
-// import Testimonial from '@/components/Home/Testimonial'
-// import BlogSmall from '@/components/shared/Blog'
-// import GetInTouch from '@/components/Home/GetInTouch'
+import LatestAdditions from "@/components/Home/LatestAdditions";
 import FAQ from "@/components/Home/FAQs";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
 
@@ -13,8 +11,8 @@ export default function Home() {
     <main>
       <Hero />
       <Services />
+      <LatestAdditions />
       <Properties />
-      {/* <FeaturedProperty /> */}
       <FAQ />
       {/* İletişime Geç kutusu - Denge Mekan Menajerlik */}
       <section className="bg-gradient-to-br from-slate-900 via-black to-slate-800 text-white py-20 relative overflow-hidden">
